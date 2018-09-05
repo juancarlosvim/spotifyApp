@@ -3,6 +3,6 @@
     <input type="text" #valorBusqueda (keyup)="buscar(valorBusqueda.value)" class="form-control" placeholder="Buscar un artista">
   </div>
 </div>
-
-<app-tarjetas [items]="artists"></app-tarjetas>
+<app-loading *ngIf="loading" class="m-5"></app-loading>
+<app-tarjetas *ngIf="!loading" [items]="artists"></app-tarjetas>
 
