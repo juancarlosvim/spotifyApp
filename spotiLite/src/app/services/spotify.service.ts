@@ -27,10 +27,15 @@ export class SpotifyService {
     }));
   }
 
-  getArtista(valorBusqueda: string){
-    return this.getQuery(`search?query=${valorBusqueda}&type=artist&market=ES&offset=0&limit=15`).pipe(map(data =>{
+  getArtistas(valorBusqueda: string) {
+    return this.getQuery(`search?query=${valorBusqueda}&type=artist&market=ES&offset=0&limit=15`).pipe(map(data => {
       return data['artists'].items;
     }));
+  }
 
+  getArtist(idArtista: string) {
+    return this.getQuery(`artists/${idArtista}`);//.pipe(map(data => {
+
+    //}));
   }
 }
