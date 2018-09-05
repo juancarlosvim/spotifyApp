@@ -11,21 +11,26 @@ export class SpotifyService {
     console.log('Spotify service listo!!');
   }
 
-  getNewReleases(){
+  getQuery(query: string) {
+    const url = `https://api.spotify.com/v1/${query}`;
+
     const headers = new HttpHeaders({
       'Authorization': 'Bearer BQAGkVVjrpaCRjD-Yym-GI9xXJHA49tFo7QMRRPdSJa970A7jPtB4iEcLN69oSHbbyiXPCiLRj3nNWTidTE'
     });
-    return this.http.get('https://api.spotify.com/v1/browse/new-releases', {headers}).pipe(map(data =>{
-        return data['albums'].items;
+
+    return this.http.get(url, {headers});
+  }
+
+  getNewReleases(){
+    return this.getQuery('browse/new-releases').pipe(map(data => {
+      return data['albums'].items;
     }));
   }
 
   getArtista(valorBusqueda: string){
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer BQAGkVVjrpaCRjD-Yym-GI9xXJHA49tFo7QMRRPdSJa970A7jPtB4iEcLN69oSHbbyiXPCiLRj3nNWTidTE'
-    });
-    return this.http.get(`https://api.spotify.com/v1/search?query=${valorBusqueda}&type=artist&market=ES&offset=0&limit=15`, {headers}).pipe(map(data =>{
+    return this.getQuery(`search?query=${valorBusqueda}&type=artist&market=ES&offset=0&limit=15`).pipe(map(data =>{
       return data['artists'].items;
     }));
+
   }
 }
